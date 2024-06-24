@@ -1,15 +1,13 @@
 import React, { useState } from "react";
+import { motion } from "framer-motion";
 import "./App.css";
 
 function App() {
-	// State to hold the birthdate input
 	const [birthdate, setBirthdate] = useState("");
-	// State to hold the zodiac sign result
 	const [zodiacSign, setZodiacSign] = useState("");
 
-	// Function to calculate zodiac sign based on the birthdate
 	const calculateZodiacSign = (date) => {
-		const month = date.getUTCMonth() + 1; // getUTCMonth() is zero-based, so we add 1
+		const month = date.getUTCMonth() + 1;
 		const day = date.getUTCDate();
 
 		if ((month === 1 && day >= 20) || (month === 2 && day <= 18)) {
@@ -39,7 +37,6 @@ function App() {
 		}
 	};
 
-	// Handle form submission
 	const handleSubmit = (event) => {
 		event.preventDefault();
 		const date = new Date(birthdate);
@@ -48,24 +45,35 @@ function App() {
 	};
 
 	return (
-		<div className="App">
-			<h1>Zodiac Sign Calculator</h1>
-			<form onSubmit={handleSubmit}>
-				<label>
+		<div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-blue-500 to-purple-600 text-white">
+			<h1 className="text-4xl font-bold mb-8">Zodiac Sign Calculator</h1>
+			<form className="flex flex-col items-center" onSubmit={handleSubmit}>
+				<label className="text-lg mb-4">
 					Enter your birthdate:
 					<input
+						className="ml-2 p-2 rounded-lg bg-white text-black"
 						type="date"
 						value={birthdate}
 						onChange={(e) => setBirthdate(e.target.value)}
 						required
 					/>
 				</label>
-				<button type="submit">Calculate</button>
+				<button
+					className="p-2 bg-blue-700 rounded-lg hover:bg-blue-800 transition-colors"
+					type="submit"
+				>
+					Calculate
+				</button>
 			</form>
 			{zodiacSign && (
-				<div className="result">
-					<h2>Your Zodiac Sign: {zodiacSign}</h2>
-				</div>
+				<motion.div
+					className="mt-8 p-4 bg-white text-black rounded-lg shadow-lg"
+					initial={{ opacity: 0, y: -50 }}
+					animate={{ opacity: 1, y: 0 }}
+					transition={{ duration: 0.5 }}
+				>
+					<h2 className="text-2xl font-bold">Your Zodiac Sign: {zodiacSign}</h2>
+				</motion.div>
 			)}
 		</div>
 	);
